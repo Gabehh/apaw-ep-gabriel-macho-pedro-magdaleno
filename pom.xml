@@ -81,6 +81,12 @@
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>${openapi.version}</version>
         </dependency>
+        <!-- Google.Guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>r07</version>
+        </dependency>
 
         <!-- ================ TEST =========================================== -->
         <!-- JUnit5 -->
