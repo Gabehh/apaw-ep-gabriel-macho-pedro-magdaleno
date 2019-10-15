@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_ep_themes.supplier_resource;
 import es.upm.miw.apaw_ep_themes.exceptions.BadRequestException;
 import com.google.common.base.Strings;
+import es.upm.miw.apaw_ep_themes.supplier_data.Supplier;
 
 public class SupplierDto {
     private String id;

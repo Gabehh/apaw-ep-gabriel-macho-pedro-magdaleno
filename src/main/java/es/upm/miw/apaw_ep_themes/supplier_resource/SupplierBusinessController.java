@@ -1,4 +1,6 @@
 package es.upm.miw.apaw_ep_themes.supplier_resource;
+import es.upm.miw.apaw_ep_themes.supplier_data.Supplier;
+import es.upm.miw.apaw_ep_themes.supplier_data.SupplierDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
