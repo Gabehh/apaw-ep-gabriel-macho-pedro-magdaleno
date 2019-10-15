@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(SupplierResource.SUPPLIERS)
 public class SupplierResource {
 
-    static final String SUPPLIERS = "/suppliers";
+    public static final String SUPPLIERS = "/suppliers";
 
     private SupplierBusinessController supplierBusinessController;
 

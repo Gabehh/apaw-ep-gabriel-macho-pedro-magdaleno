@@ -1,4 +1,4 @@
-package es.upm.miw.apaw_ep_themes.supplier_resource;
+package es.upm.miw.apaw_ep_themes.supplier_data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
