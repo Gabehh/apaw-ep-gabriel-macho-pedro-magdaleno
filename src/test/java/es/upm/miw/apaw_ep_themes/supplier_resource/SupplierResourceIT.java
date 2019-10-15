@@ -25,7 +25,7 @@ public class SupplierResourceIT {
                 .expectBody(SupplierDto.class).returnResult().getResponseBody();
         assertNotNull(supplierDto);
         assertFalse(supplierDto.getIsLocal());
-        assertEquals("First Supplier", supplierDto.getDirection());
+        assertEquals("Park Avenue 12-3", supplierDto.getDirection());
     }
 
     @Test
