@@ -9,13 +9,13 @@ public class Supplier {
 
     private Boolean isLocal;
 
-    private String description;
+    private String direction;
 
     private String telephone;
 
-    public Supplier(Boolean isLocal, String description, String telephone){
+    public Supplier(Boolean isLocal, String direction, String telephone){
         this.isLocal = isLocal;
-        this.description = description;
+        this.direction = direction;
         this.telephone = telephone;
     }
 
@@ -27,9 +27,7 @@ public class Supplier {
         return isLocal;
     }
 
-    public String getDescription(){
-        return description;
-    }
+    public String getDirection(){ return direction; }
 
     public String getTelephone(){
         return telephone;
@@ -40,7 +38,7 @@ public class Supplier {
         return "Supplier(" +
                 "id='"+id + '\''+
                 ", isLocal='"+isLocal + '\''+
-                ", description='"+description + '\''+
+                ", direction='"+direction + '\''+
                 ", telephone='"+telephone + '\''+
                 "}";
     }

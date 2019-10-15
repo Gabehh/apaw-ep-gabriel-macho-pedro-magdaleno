@@ -21,7 +21,7 @@ public class ProductResourceIT {
     void testCreate() {
         String supplierId = this.webTestClient
                 .post().uri(SupplierResource.SUPPLIERS)
-                .body(BodyInserters.fromObject(new SupplierDto(false,"First Supplier","+34685615119")))
+                .body(BodyInserters.fromObject(new SupplierDto(false,"Street London 12-3","+34685615119")))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(SupplierDto.class).returnResult().getResponseBody().getId();

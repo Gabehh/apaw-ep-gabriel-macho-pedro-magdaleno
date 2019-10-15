@@ -13,7 +13,7 @@ public class SupplierBusinessController {
     public SupplierBusinessController(SupplierDao supplierDao){this.supplierDao = supplierDao;}
 
     public SupplierDto create(SupplierDto supplierDto){
-        Supplier supplier = new Supplier(supplierDto.getIsLocal(),supplierDto.getDescription(),supplierDto.getTelephone());
+        Supplier supplier = new Supplier(supplierDto.getIsLocal(),supplierDto.getDirection(),supplierDto.getTelephone());
         this.supplierDao.save(supplier);
         return new SupplierDto(supplier);
     }
