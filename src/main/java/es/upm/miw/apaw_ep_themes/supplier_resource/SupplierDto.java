@@ -8,28 +8,28 @@ public class SupplierDto {
 
     private Boolean isLocal;
 
-    private String description;
+    private String direction;
 
     private String telephone;
 
     public SupplierDto() {
         // empty for framework
     }
-    public SupplierDto(Boolean isLocal, String description, String telephone){
+    public SupplierDto(Boolean isLocal, String direction, String telephone){
         this.isLocal = isLocal;
-        this.description = description;
+        this.direction = direction;
         this.telephone = telephone;
     }
 
     public SupplierDto(Supplier supplier){
         this.id = supplier.getId();
-        this.description = supplier.getDescription();
+        this.direction = supplier.getDirection();
         this.isLocal = supplier.getIsLocal();
         this.telephone = supplier.getTelephone();
     }
 
     public void validate(){
-        if(Strings.isNullOrEmpty(description) || Strings.isNullOrEmpty(telephone) || isLocal == null){
+        if(Strings.isNullOrEmpty(direction) || Strings.isNullOrEmpty(telephone) || isLocal == null){
             throw new BadRequestException("Incomplete SupplierDto. ");
         }
     }
@@ -46,10 +46,10 @@ public class SupplierDto {
         this.isLocal = isLocal;
     }
 
-    public String getDescription(){return  description;}
+    public String getDirection(){return  direction;}
 
-    public void setDescription(String description){
-        this.description = description;
+    public void setDirection(String description){
+        this.direction = description;
     }
 
     public String getTelephone(){return  telephone;}
@@ -63,7 +63,7 @@ public class SupplierDto {
         return "SupplierDto(" +
                 "id='"+id + '\''+
                 ", isLocal='"+isLocal + '\''+
-                ", description='"+description + '\''+
+                ", description='"+direction + '\''+
                 ", telephone='"+telephone + '\''+
                 "}";
     }

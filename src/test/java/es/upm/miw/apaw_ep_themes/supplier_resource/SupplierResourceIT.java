@@ -19,13 +19,13 @@ public class SupplierResourceIT {
     void testCreate() {
         SupplierDto supplierDto = this.webTestClient
                 .post().uri(SupplierResource.SUPPLIERS)
-                .body(BodyInserters.fromObject(new SupplierDto(false,"First Supplier","+34685615119")))
+                .body(BodyInserters.fromObject(new SupplierDto(false,"Park Avenue 12-3","+34685615119")))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(SupplierDto.class).returnResult().getResponseBody();
         assertNotNull(supplierDto);
         assertFalse(supplierDto.getIsLocal());
-        assertEquals("First Supplier", supplierDto.getDescription());
+        assertEquals("First Supplier", supplierDto.getDirection());
     }
 
     @Test
