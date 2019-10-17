@@ -5,6 +5,9 @@ import es.upm.miw.apaw_ep_themes.supplier_data.SupplierDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Controller
 public class ProductBusinessController {
 
@@ -23,5 +26,12 @@ public class ProductBusinessController {
         Product product = new Product(productCreationDto.getName(),productCreationDto.getDescription(), productCreationDto.getPrice(), supplier);
         this.productDao.save(product);
         return new ProductBasicDto(product);
+    }
+
+    public List<ProductBasicDto> findBySupplierDirection(String value){
+        return this.productDao.findAll().stream()
+                .filter(product -> product.getSupplier().getDirection() == value)
+                .map(ProductBasicDto::new)
+                .collect(Collectors.toList());
     }
 }
