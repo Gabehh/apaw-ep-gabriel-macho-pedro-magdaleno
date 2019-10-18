@@ -47,4 +47,27 @@ public class SupplierResourceIT {
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
     }
+
+    @Test
+    void deleteSupplier(){
+        String idSupplier = this.webTestClient
+                .post().uri(SupplierResource.SUPPLIERS)
+                .body(BodyInserters.fromObject(new SupplierDto(false,"Park Avenue 12-3","+34685615119")))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(SupplierDto.class).returnResult().getResponseBody().getId();
+        this.webTestClient
+                .delete().uri(SupplierResource.SUPPLIERS + SupplierResource.ID_ID, idSupplier)
+                .exchange()
+                .expectStatus().isOk();
+    }
+
+    @Test
+    void deleteSupplierException(){
+        this.webTestClient
+                .delete().uri(SupplierResource.SUPPLIERS + SupplierResource.ID_ID, "")
+                .exchange()
+                .expectStatus()
+                .isEqualTo(HttpStatus.BAD_REQUEST);
+    }
 }
