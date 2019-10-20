@@ -19,7 +19,7 @@ public class ProductResourceIT {
     @Autowired
     private WebTestClient webTestClient;
 
-    public String CreateSuppplier(String value){
+    public String createSupplier(String value){
         return this.webTestClient
                 .post().uri(SupplierResource.SUPPLIERS)
                 .body(BodyInserters.fromObject(new SupplierDto(false,value,value)))
@@ -28,22 +28,26 @@ public class ProductResourceIT {
                 .expectBody(SupplierDto.class).returnResult().getResponseBody().getId();
     }
 
-    @Test
-    void testCreateProduct() {
-        String supplierId = this.CreateSuppplier("testSupplier");
-        ProductBasicDto productBasicDto = this.webTestClient
+    public ProductBasicDto createProduct(String value){
+        String supplierId = this.createSupplier("test-supplier");
+        return this.webTestClient
                 .post().uri(ProductResource.PRODUCTS)
-                .body(BodyInserters.fromObject(new ProductCreationDto("Hambuger", "It has cheese",2323.0232,supplierId)))
+                .body(BodyInserters.fromObject(new ProductCreationDto(value, value,4.0,supplierId)))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(ProductBasicDto.class).returnResult().getResponseBody();
-        assertNotNull(productBasicDto);
-        assertEquals("It has cheese", productBasicDto.getDescription());
     }
 
     @Test
-    void testCreateProductException() {
-        String supplierId = this.CreateSuppplier("testSupplier");
+    void testCreate() {
+        ProductBasicDto productBasicDto = this.createProduct("Hamburger");
+        assertNotNull(productBasicDto);
+        assertEquals("Hamburger", productBasicDto.getDescription());
+    }
+
+    @Test
+    void testCreateProductIncomplete() {
+        String supplierId = this.createSupplier("test-supplier");
         this.webTestClient
                 .post().uri(ProductResource.PRODUCTS)
                 .body(BodyInserters.fromObject(new ProductCreationDto("", "",null,supplierId)))
@@ -52,8 +56,16 @@ public class ProductResourceIT {
     }
 
     @Test
+    void testCreateBadRequest() {
+        this.webTestClient
+                .post().uri(ProductResource.PRODUCTS)
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
     void testSearch() {
-        String supplierId = this.CreateSuppplier("Burger King 2-1");
+        String supplierId = this.createSupplier("Burger King 2-1");
         this.webTestClient
                 .post().uri(ProductResource.PRODUCTS)
                 .body(BodyInserters.fromObject(new ProductCreationDto("Big Hamburger", "It has cheese",5.0,supplierId)))
@@ -79,17 +91,18 @@ public class ProductResourceIT {
     }
 
     @Test
-    void testSearchException() {
-        String supplierId = this.CreateSuppplier("Burger King 2-1");
+    void testSearchBadRequest() {
+        String firstSupplierId = this.createSupplier("Burger King 2-1");
+        String secondSupplierId = this.createSupplier("McDonald's");
         this.webTestClient
                 .post().uri(ProductResource.PRODUCTS)
-                .body(BodyInserters.fromObject(new ProductCreationDto("Big Hamburger", "It has cheese",5.0,supplierId)))
+                .body(BodyInserters.fromObject(new ProductCreationDto("Big Hamburger", "It has cheese",5.0,firstSupplierId)))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(ProductBasicDto.class).returnResult().getResponseBody();
         this.webTestClient
                 .post().uri(ProductResource.PRODUCTS)
-                .body(BodyInserters.fromObject(new ProductCreationDto("Small Burger", "It hasn't got cheese",2.0,supplierId)))
+                .body(BodyInserters.fromObject(new ProductCreationDto("Small Burger", "It hasn't got cheese",2.0,secondSupplierId)))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(ProductBasicDto.class).returnResult().getResponseBody();
@@ -97,6 +110,62 @@ public class ProductResourceIT {
                 .get().uri(uriBuilder -> uriBuilder.path(ProductResource.PRODUCTS+ProductResource.SEARCH)
                 .queryParam("q","")
                 .build())
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    void testSearchEmpty() {
+        List<ProductBasicDto> products = this.webTestClient
+                .get().uri(uriBuilder -> uriBuilder.path(ProductResource.PRODUCTS+ProductResource.SEARCH)
+                        .queryParam("q","Burger King 2-1")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(ProductBasicDto.class)
+                .returnResult().getResponseBody();
+        assertTrue(products.size() == 0);
+    }
+
+    @Test
+    void testUpdate(){
+        String id = this.createProduct("Hamburger").getId();
+        String newDirection = this.createSupplier("Park Avenue 1-2, London");
+        ProductUpdateDto productUpdateDto = new ProductUpdateDto();
+        productUpdateDto.setName("New Hamburger");
+        productUpdateDto.setDescription("It has cheese");
+        productUpdateDto.setPrice(5.0);
+        productUpdateDto.setSupplierId(newDirection);
+        this.webTestClient
+                .put().uri(ProductResource.PRODUCTS+ProductResource.ID_ID, id)
+                .body(BodyInserters.fromObject(productUpdateDto))
+                .exchange()
+                .expectStatus().isOk();
+        List<ProductBasicDto> products = this.webTestClient
+                .get().uri(uriBuilder -> uriBuilder.path(ProductResource.PRODUCTS+ProductResource.SEARCH)
+                        .queryParam("q","Park Avenue 1-2, London")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(ProductBasicDto.class)
+                .returnResult().getResponseBody();
+        assertEquals(id,products.get(0).getId());
+        assertEquals("New Hamburger",products.get(0).getName());
+    }
+
+    @Test
+    void testUpdateNotFoundException(){
+        String id = this.createProduct("Hamburger").getId();
+        this.webTestClient
+                .put().uri(ProductResource.PRODUCTS+ProductResource.ID_ID, id)
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    void testUpdateBadRequestException(){
+        this.webTestClient
+                .put().uri(ProductResource.PRODUCTS+ProductResource.ID_ID, "xxx")
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
     }

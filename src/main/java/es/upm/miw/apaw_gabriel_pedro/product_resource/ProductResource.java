@@ -12,6 +12,7 @@ public class ProductResource {
 
     public static final String PRODUCTS = "/products";
     public static final String SEARCH = "/search";
+    public static final String ID_ID = "/{id}";
 
     private ProductBusinessController productBusinessController;
 
@@ -32,6 +33,13 @@ public class ProductResource {
             throw new BadRequestException("query param q is incorrect, missing direction");
         }
         return this.productBusinessController.findBySupplierDirection(q);
+    }
+
+
+    @PutMapping(value = ID_ID)
+    public void update (@PathVariable String id,@RequestBody ProductUpdateDto productUpdateDto ){
+        productUpdateDto.validate();
+        this.productBusinessController.update(id,productUpdateDto);
     }
 
 }
