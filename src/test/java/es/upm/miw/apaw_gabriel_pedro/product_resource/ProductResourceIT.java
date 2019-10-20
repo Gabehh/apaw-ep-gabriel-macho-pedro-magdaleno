@@ -131,14 +131,14 @@ public class ProductResourceIT {
     void testUpdate(){
         String id = this.createProduct("Hamburger").getId();
         String newDirection = this.createSupplier("Park Avenue 1-2, London");
-        ProductUpdateDto productUpdateDto = new ProductUpdateDto();
-        productUpdateDto.setName("New Hamburger");
-        productUpdateDto.setDescription("It has cheese");
-        productUpdateDto.setPrice(5.0);
-        productUpdateDto.setSupplierId(newDirection);
+        ProductCreationDto productUpdate = new ProductCreationDto();
+        productUpdate.setName("New Hamburger");
+        productUpdate.setDescription("It has cheese");
+        productUpdate.setPrice(5.0);
+        productUpdate.setSupplierId(newDirection);
         this.webTestClient
                 .put().uri(ProductResource.PRODUCTS+ProductResource.ID_ID, id)
-                .body(BodyInserters.fromObject(productUpdateDto))
+                .body(BodyInserters.fromObject(productUpdate))
                 .exchange()
                 .expectStatus().isOk();
         List<ProductBasicDto> products = this.webTestClient

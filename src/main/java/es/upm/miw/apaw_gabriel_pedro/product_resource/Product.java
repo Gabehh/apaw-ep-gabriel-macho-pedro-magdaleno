@@ -43,6 +43,7 @@ public class Product {
     public void setPrice(Double price){this.price = price;}
 
     public Supplier getSupplier(){return supplier;}
+
     public void setSupplier(Supplier supplier){this.supplier = supplier;}
 
     @Override

@@ -40,14 +40,14 @@ public class ProductBusinessController {
         return this.productDao.findById(id).orElseThrow(()-> new NotFoundException("Product id: "+ id));
     }
 
-    public void update(String id, ProductUpdateDto productUpdateDto){
+    public void update(String id, ProductCreationDto productCreationDto){
         Product product = this.findProductById(id);
-        product.setDescription(productUpdateDto.getDescription());
-        product.setName(productUpdateDto.getName());
-        product.setPrice(productUpdateDto.getPrice());
-        if(!Strings.isNullOrEmpty(productUpdateDto.getSupplierId())) {
-            Supplier supplier = this.supplierDao.findById(productUpdateDto.getSupplierId())
-                                .orElseThrow(() -> new NotFoundException("Product id: " + productUpdateDto.getSupplierId()));
+        product.setDescription(productCreationDto.getDescription());
+        product.setName(productCreationDto.getName());
+        product.setPrice(productCreationDto.getPrice());
+        if(!Strings.isNullOrEmpty(productCreationDto.getSupplierId())) {
+            Supplier supplier = this.supplierDao.findById(productCreationDto.getSupplierId())
+                                .orElseThrow(() -> new NotFoundException("Product id: " + productCreationDto.getSupplierId()));
             product.setSupplier(supplier);
         }
         this.productDao.save(product);
