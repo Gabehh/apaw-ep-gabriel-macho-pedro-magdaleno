@@ -3,9 +3,9 @@ package es.upm.miw.apaw_gabriel_pedro.bill_resource;
 import es.upm.miw.apaw_gabriel_pedro.ApiTestConfig;
 import es.upm.miw.apaw_gabriel_pedro.product_data.Product;
 import es.upm.miw.apaw_gabriel_pedro.product_resource.ProductBasicDto;
+import es.upm.miw.apaw_gabriel_pedro.product_resource.ProductBusinessController;
 import es.upm.miw.apaw_gabriel_pedro.product_resource.ProductCreationDto;
 import es.upm.miw.apaw_gabriel_pedro.product_resource.ProductResource;
-import es.upm.miw.apaw_gabriel_pedro.supplier_data.Supplier;
 import es.upm.miw.apaw_gabriel_pedro.supplier_resource.SupplierDto;
 import es.upm.miw.apaw_gabriel_pedro.supplier_resource.SupplierResource;
 import org.junit.jupiter.api.Test;
@@ -17,11 +17,13 @@ import org.springframework.web.reactive.function.BodyInserters;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ApiTestConfig
 public class BillResourceIT {
+
+    @Autowired
+    private ProductBusinessController productBusinessController;
 
     @Autowired
     private WebTestClient webTestClient;
@@ -35,20 +37,21 @@ public class BillResourceIT {
                 .expectBody(SupplierDto.class).returnResult().getResponseBody().getId();
     }
 
-    public ProductBasicDto createProduct(String value){
+    public String createProduct(String value){
         String supplierId = this.createSupplier("test-supplier");
         return this.webTestClient
                 .post().uri(ProductResource.PRODUCTS)
                 .body(BodyInserters.fromObject(new ProductCreationDto(value, value,4.0,supplierId)))
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(ProductBasicDto.class).returnResult().getResponseBody();
+                .expectBody(ProductBasicDto.class).returnResult().getResponseBody().getId();
     }
 
 
     public BillBasicDto createBill(){
         List<Product> products = new ArrayList<Product>();
-        Product myProduct = new Product("Hamburger", "Hamburguer", 20.34, new Supplier(true, "Calle X", "697211047"));
+        String myProductId = this.createProduct("Hamburguer");
+        Product myProduct = productBusinessController.findProductById(myProductId);
         products.add(myProduct);
 
         return this.webTestClient
