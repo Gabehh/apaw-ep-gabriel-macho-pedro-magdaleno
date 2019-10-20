@@ -23,7 +23,7 @@ public class ProductResource {
 
     @PostMapping
     public ProductBasicDto create (@RequestBody ProductCreationDto productCreationDto){
-        productCreationDto.validate();
+        productCreationDto.validateCreate();
         return this.productBusinessController.create(productCreationDto);
     }
 
@@ -35,11 +35,10 @@ public class ProductResource {
         return this.productBusinessController.findBySupplierDirection(q);
     }
 
-
     @PutMapping(value = ID_ID)
-    public void update (@PathVariable String id,@RequestBody ProductUpdateDto productUpdateDto ){
-        productUpdateDto.validate();
-        this.productBusinessController.update(id,productUpdateDto);
+    public void update (@PathVariable String id,@RequestBody ProductCreationDto productCreationDto ){
+        productCreationDto.validateUpdate();
+        this.productBusinessController.update(id,productCreationDto);
     }
 
 }

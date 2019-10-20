@@ -42,11 +42,18 @@ public class ProductCreationDto {
 
     public void setSupplierId(String supplierId){ this.supplierId = supplierId;}
 
-    public void validate(){
+    public void validateCreate(){
         if(Strings.isNullOrEmpty(description) || Strings.isNullOrEmpty(name) || price == null || Strings.isNullOrEmpty(supplierId)){
             throw new BadRequestException("Incomplete Product. ");
         }
     }
+
+    public void validateUpdate(){
+        if(Strings.isNullOrEmpty(description) || Strings.isNullOrEmpty(name) || price == null ){
+            throw new BadRequestException("Incomplete Product. ");
+        }
+    }
+
 
     @Override
     public String toString(){
