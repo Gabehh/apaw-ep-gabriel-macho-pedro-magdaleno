@@ -40,6 +40,12 @@ public class ProductBusinessController {
         return this.productDao.findById(id).orElseThrow(()-> new NotFoundException("Product id: "+ id));
     }
 
+    private Product findAndEditProduct(String id, String name){
+        Product product = findProductById(id);
+        product.setName(name);
+        return product;
+    }
+
     public void update(String id, ProductCreationDto productCreationDto){
         Product product = this.findProductById(id);
         product.setDescription(productCreationDto.getDescription());
@@ -51,5 +57,11 @@ public class ProductBusinessController {
             product.setSupplier(supplier);
         }
         this.productDao.save(product);
+    }
+
+    public void patch(List<ProductBasicDto> products){
+        List<Product> productList = products.stream()
+                .map(value -> findAndEditProduct(value.getId(),value.getName())).collect(Collectors.toList());
+        this.productDao.saveAll(productList);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -169,4 +170,56 @@ public class ProductResourceIT {
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
     }
+
+    @Test
+    void testPatch(){
+        String idMeat = this.createProduct("Meat").getId();
+        String idChicken = this.createProduct("Chicken").getId();
+        String idFish = this.createProduct("Fish").getId();
+        ProductBasicDto newMeat = new ProductBasicDto();
+        newMeat.setId(idMeat);
+        newMeat.setName("New Meat");
+        ProductBasicDto newChicken = new ProductBasicDto();
+        newChicken.setId(idChicken);
+        newChicken.setName("New Chicken");
+        ProductBasicDto newFish = new ProductBasicDto();
+        newFish.setId(idFish);
+        newFish.setName("New Fish");
+        List<ProductBasicDto> productBasicDtoList = new ArrayList<>();
+        productBasicDtoList.add(newMeat);
+        productBasicDtoList.add(newChicken);
+        productBasicDtoList.add(newFish);
+        this.webTestClient
+                .patch().uri(ProductResource.PRODUCTS)
+                .body(BodyInserters.fromObject(productBasicDtoList))
+                .exchange()
+                .expectStatus().isOk();
+        List<ProductBasicDto> products = this.webTestClient
+                .get().uri(uriBuilder -> uriBuilder.path(ProductResource.PRODUCTS+ProductResource.SEARCH)
+                        .queryParam("q","test-supplier")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(ProductBasicDto.class)
+                .returnResult().getResponseBody();
+    }
+
+    @Test
+    void testPatchNotFoundException(){
+        this.webTestClient
+                .patch().uri(ProductResource.PRODUCTS)
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    void testPatchListException(){
+        List<ProductBasicDto> productBasicDtoList = new ArrayList<>();
+        this.webTestClient
+                .patch().uri(ProductResource.PRODUCTS)
+                .body(BodyInserters.fromObject(productBasicDtoList))
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
 }
