@@ -66,7 +66,6 @@ public class BillResourceIT {
     @Test
     void testCreate() {
         BillBasicDto billBasicDto = this.createBill();
-        assertNotNull(billBasicDto);
     }
 
     @Test
