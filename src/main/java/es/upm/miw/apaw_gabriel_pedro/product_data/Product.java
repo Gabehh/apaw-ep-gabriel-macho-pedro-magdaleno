@@ -1,4 +1,4 @@
-package es.upm.miw.apaw_gabriel_pedro.product_resource;
+package es.upm.miw.apaw_gabriel_pedro.product_data;
 import es.upm.miw.apaw_gabriel_pedro.supplier_data.Supplier;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;

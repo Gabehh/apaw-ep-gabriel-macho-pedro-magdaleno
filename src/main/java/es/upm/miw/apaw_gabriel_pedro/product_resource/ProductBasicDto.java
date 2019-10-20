@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_gabriel_pedro.product_resource;
 
+import es.upm.miw.apaw_gabriel_pedro.product_data.Product;
+
 public class ProductBasicDto {
 
     private String id;
