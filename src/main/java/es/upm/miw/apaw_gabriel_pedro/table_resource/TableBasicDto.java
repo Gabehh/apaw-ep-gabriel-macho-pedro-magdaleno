@@ -1,17 +1,11 @@
 package es.upm.miw.apaw_gabriel_pedro.table_resource;
 
 import es.upm.miw.apaw_gabriel_pedro.bill_data.Bill;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Document
-public class Table {
+public class TableBasicDto {
 
-    @Id
     private String id;
 
     private Integer numberOfPeople;
@@ -20,14 +14,15 @@ public class Table {
 
     private Boolean isTerrace;
 
-    @DBRef
-    private List<Bill> bills;
+    public TableBasicDto() {
 
-    public Table(Integer numberOfPeople, String description, Boolean isTerrace) {
-        this.numberOfPeople = numberOfPeople;
-        this.description = description;
-        this.isTerrace = isTerrace;
-        this.bills = new ArrayList<>();
+    }
+
+    public TableBasicDto(Table table) {
+        this.id = table.getId();
+        this.numberOfPeople = table.getNumberOfPeople();
+        this.description = table.getDescription();
+        this.isTerrace = table.getTerrace();
     }
 
     public String getId() {
@@ -58,8 +53,13 @@ public class Table {
         isTerrace = terrace;
     }
 
-    public List<Bill> getBills() {
-        return bills;
+    @Override
+    public String toString() {
+        return "TableBasicDto{" +
+                "id='" + id + '\'' +
+                ", numberOfPeople=" + numberOfPeople + '\'' +
+                ", description='" + description + '\'' +
+                ", isTerrace=" + isTerrace + '\'' +
+                '}';
     }
-
 }

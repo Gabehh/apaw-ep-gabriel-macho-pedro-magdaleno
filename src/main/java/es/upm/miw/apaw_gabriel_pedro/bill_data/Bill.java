@@ -1,4 +1,4 @@
-package es.upm.miw.apaw_gabriel_pedro.bill_resource;
+package es.upm.miw.apaw_gabriel_pedro.bill_data;
 
 import es.upm.miw.apaw_gabriel_pedro.product_data.Product;
 import org.springframework.data.annotation.Id;
