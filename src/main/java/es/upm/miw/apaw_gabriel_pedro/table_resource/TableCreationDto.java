@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_gabriel_pedro.table_resource;
 
+import com.google.common.base.Strings;
 import es.upm.miw.apaw_gabriel_pedro.bill_data.Bill;
+import es.upm.miw.apaw_gabriel_pedro.exceptions.BadRequestException;
 
 import java.util.List;
 
@@ -45,12 +47,16 @@ public class TableCreationDto {
         return isTerrace;
     }
 
-    public void setTerrace(Boolean terrace) {
-        isTerrace = terrace;
-    }
+    public void setTerrace(Boolean terrace) { this.isTerrace = terrace; }
 
     public List<Bill> getBills() {
         return bills;
+    }
+
+    public void validate() {
+        if (numberOfPeople == null || Strings.isNullOrEmpty(description) || isTerrace == null || bills == null) {
+            throw new BadRequestException("Incomplete Table. ");
+        }
     }
 
     @Override
@@ -62,4 +68,6 @@ public class TableCreationDto {
                 ", bills=" + bills + '\'' +
                 '}';
     }
+
+
 }
