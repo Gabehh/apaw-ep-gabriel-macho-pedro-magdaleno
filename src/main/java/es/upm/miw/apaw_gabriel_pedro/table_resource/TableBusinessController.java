@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_gabriel_pedro.table_resource;
 
 import es.upm.miw.apaw_gabriel_pedro.bill_data.BillDao;
+import es.upm.miw.apaw_gabriel_pedro.table_data.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 

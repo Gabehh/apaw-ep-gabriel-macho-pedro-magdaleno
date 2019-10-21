@@ -1,8 +1,6 @@
 package es.upm.miw.apaw_gabriel_pedro.table_resource;
 
-import es.upm.miw.apaw_gabriel_pedro.bill_data.Bill;
-
-import java.util.List;
+import es.upm.miw.apaw_gabriel_pedro.table_data.Table;
 
 public class TableBasicDto {
 
