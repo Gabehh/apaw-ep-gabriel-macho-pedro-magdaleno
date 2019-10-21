@@ -19,6 +19,14 @@ public class BillBusinessController {
     }
 
     public BillBasicDto create (BillCreationDto billCreationDto) {
+        Product myProduct;
+        for (int i = 0; i <= billCreationDto.getProducts().size() - 1; i++) {
+            myProduct = billCreationDto.getProducts().get(i);
+            Product finalMyProduct = myProduct;
+            Product product = this.productDao.findById(myProduct.getId())
+                    .orElseThrow(()-> new NotFoundException("Product id: "+ finalMyProduct.getId()));
+            System.out.println(billCreationDto.getProducts().get(i));
+        }
         Bill bill = new Bill (billCreationDto.getTotal(), billCreationDto.getTotalIva(), billCreationDto.getProducts());
         this.billDao.save(bill);
         return new BillBasicDto(bill);

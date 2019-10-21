@@ -28,46 +28,6 @@ public class BillResourceIT {
     @Autowired
     private WebTestClient webTestClient;
 
-    public String createSupplier(String value){
-        return this.webTestClient
-                .post().uri(SupplierResource.SUPPLIERS)
-                .body(BodyInserters.fromObject(new SupplierDto(false,value,value)))
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody(SupplierDto.class).returnResult().getResponseBody().getId();
-    }
-
-    public String createProduct(String value){
-        String supplierId = this.createSupplier("test-supplier");
-        return this.webTestClient
-                .post().uri(ProductResource.PRODUCTS)
-                .body(BodyInserters.fromObject(new ProductCreationDto(value, value,4.0,supplierId)))
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody(ProductBasicDto.class).returnResult().getResponseBody().getId();
-    }
-
-
-    public BillBasicDto createBill(){
-        List<Product> products = new ArrayList<Product>();
-        String myProductId = this.createProduct("Hamburguer");
-        Product myProduct = productBusinessController.findProductById(myProductId);
-        products.add(myProduct);
-        return this.webTestClient
-                .post().uri(BillResource.BILLS)
-                .body(BodyInserters.fromObject(new BillCreationDto(45.67, 58.54, products)))
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody(BillBasicDto.class).returnResult().getResponseBody();
-    }
-
-
-    @Test
-    void testCreate() {
-        BillBasicDto billBasicDto = this.createBill();
-        assertNotNull(billBasicDto);
-    }
-
     @Test
     void testCreateIncompleteBill() {
         List<Product> products = new ArrayList<Product>();
