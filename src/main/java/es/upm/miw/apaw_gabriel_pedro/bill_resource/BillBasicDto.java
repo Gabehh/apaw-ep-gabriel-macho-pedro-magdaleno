@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_gabriel_pedro.bill_resource;
 
+import es.upm.miw.apaw_gabriel_pedro.bill_data.Bill;
+
 import java.time.LocalDateTime;
 
 public class BillBasicDto {
