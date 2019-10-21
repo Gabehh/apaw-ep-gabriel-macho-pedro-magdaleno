@@ -1,6 +1,6 @@
 package es.upm.miw.apaw_gabriel_pedro.waiter_resource;
 
-import es.upm.miw.apaw_gabriel_pedro.table_resource.Table;
+import es.upm.miw.apaw_gabriel_pedro.table_data.Table;
 import org.springframework.data.annotation.Id;
 
 import java.util.Date;
