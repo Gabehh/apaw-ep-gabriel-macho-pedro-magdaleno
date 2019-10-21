@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import es.upm.miw.apaw_gabriel_pedro.bill_data.Bill;
 import es.upm.miw.apaw_gabriel_pedro.exceptions.BadRequestException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TableCreationDto {
@@ -20,11 +21,11 @@ public class TableCreationDto {
 
     }
 
-    public TableCreationDto(Integer numberOfPeople, String description, Boolean isTerrace, List<Bill> bills) {
+    public TableCreationDto(Integer numberOfPeople, String description, Boolean isTerrace) {
         this.numberOfPeople = numberOfPeople;
         this.description = description;
         this.isTerrace = isTerrace;
-        this.bills = bills;
+        this.bills = new ArrayList<>();
     }
 
     public Integer getNumberOfPeople() {
