@@ -38,7 +38,7 @@ public class ProductBusinessController {
                 .collect(Collectors.toList());
     }
 
-    public Product findProductById(String id){
+    private Product findProductById(String id){
         return this.productDao.findById(id).orElseThrow(()-> new NotFoundException("Product id: "+ id));
     }
 
