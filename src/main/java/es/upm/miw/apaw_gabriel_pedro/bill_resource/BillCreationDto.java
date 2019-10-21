@@ -8,8 +8,6 @@ import java.util.List;
 
 public class BillCreationDto {
 
-    private String id;
-
     private Double total;
 
     private LocalDateTime date;
@@ -27,10 +25,6 @@ public class BillCreationDto {
         this.date = LocalDateTime.now();
         this.totalIva = totalIva;
         this.products = products;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public Double getTotal() {
@@ -58,11 +52,10 @@ public class BillCreationDto {
     @Override
     public String toString() {
         return "BillBasicDto{" +
-                "id='" + id + '\'' +
-                ", total=" + total +
-                ", date=" + date +
-                ", totalIva=" + totalIva +
-                ", products=" + products +
+                "total=" + total + '\'' +
+                ", date=" + date + '\'' +
+                ", totalIva=" + totalIva + '\'' +
+                ", products=" + products + '\'' +
                 '}';
     }
 }

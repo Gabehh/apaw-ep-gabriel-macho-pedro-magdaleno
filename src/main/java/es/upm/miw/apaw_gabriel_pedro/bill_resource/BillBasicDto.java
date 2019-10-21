@@ -15,8 +15,6 @@ public class BillBasicDto {
 
     private Double totalIva;
 
-    private List<Product> products;
-
     public BillBasicDto() {
 
     }
@@ -26,7 +24,6 @@ public class BillBasicDto {
         this.total = bill.getTotal();
         this.date = bill.getDate();
         this.totalIva = bill.getTotalIva();
-        this.products = bill.getProducts();
     }
 
     public String getId() {
@@ -45,18 +42,13 @@ public class BillBasicDto {
         return totalIva;
     }
 
-    public List<Product> getProducts() {
-        return products;
-    }
-
     @Override
     public String toString() {
         return "BillBasicDto {" +
                 "id='" + id + '\'' +
-                ", total=" + total +
-                ", date=" + date +
-                ", totalIva=" + totalIva +
-                ", products=" + products +
+                ", total=" + total + '\'' +
+                ", date=" + date + '\'' +
+                ", totalIva=" + totalIva + '\'' +
                 '}';
     }
 }

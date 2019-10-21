@@ -54,10 +54,10 @@ public class Bill {
     public String toString() {
         return "Bill{" +
                 "id='" + id + '\'' +
-                ", total=" + total +
-                ", date=" + date +
-                ", totalIva=" + totalIva +
-                ", products=" + products +
+                ", total=" + total + '\'' +
+                ", date=" + date + '\'' +
+                ", totalIva=" + totalIva + '\'' +
+                ", products=" + products + '\'' +
                 '}';
     }
 
