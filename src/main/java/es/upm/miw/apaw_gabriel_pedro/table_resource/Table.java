@@ -62,4 +62,14 @@ public class Table {
         return bills;
     }
 
+    @Override
+    public String toString() {
+        return "Table{" +
+                "id='" + id + '\'' +
+                ", numberOfPeople=" + numberOfPeople + '\'' +
+                ", description='" + description + '\'' +
+                ", isTerrace=" + isTerrace + '\'' +
+                ", bills=" + bills + '\'' +
+                '}';
+    }
 }
