@@ -53,7 +53,6 @@ public class BillResourceIT {
         String myProductId = this.createProduct("Hamburguer");
         Product myProduct = productBusinessController.findProductById(myProductId);
         products.add(myProduct);
-
         return this.webTestClient
                 .post().uri(BillResource.BILLS)
                 .body(BodyInserters.fromObject(new BillCreationDto(45.67, 58.54, products)))
@@ -66,6 +65,7 @@ public class BillResourceIT {
     @Test
     void testCreate() {
         BillBasicDto billBasicDto = this.createBill();
+        assertNotNull(billBasicDto);
     }
 
     @Test

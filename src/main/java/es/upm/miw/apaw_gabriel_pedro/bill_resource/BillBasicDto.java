@@ -22,6 +22,7 @@ public class BillBasicDto {
     }
 
     public BillBasicDto(Bill bill) {
+        this.id = bill.getId();
         this.total = bill.getTotal();
         this.date = bill.getDate();
         this.totalIva = bill.getTotalIva();
