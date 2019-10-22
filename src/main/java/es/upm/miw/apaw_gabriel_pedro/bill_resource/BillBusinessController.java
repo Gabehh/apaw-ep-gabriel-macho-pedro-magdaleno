@@ -37,7 +37,7 @@ public class BillBusinessController {
     }
 
 
-    public List<BillGetDto> findBills(BillGetDto billGetDto){
+    public List<BillGetDto> findBills(){
         return this.billDao.findAll().stream()
                 .map(BillGetDto::new)
                 .collect(Collectors.toList());
