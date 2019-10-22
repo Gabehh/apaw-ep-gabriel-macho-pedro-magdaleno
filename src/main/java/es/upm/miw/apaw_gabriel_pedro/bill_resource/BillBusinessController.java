@@ -8,6 +8,7 @@ import es.upm.miw.apaw_gabriel_pedro.product_data.ProductDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +34,7 @@ public class BillBusinessController {
     public List<BillGetDto> findBills(){
         return this.billDao.findAll().stream()
                 .map(BillGetDto::new)
+                .sorted(Comparator.comparing(BillGetDto::getDate))
                 .collect(Collectors.toList());
     }
 
