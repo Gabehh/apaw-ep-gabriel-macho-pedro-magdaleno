@@ -33,7 +33,7 @@ public class SupplierResourceIT {
 
         assertNotNull(supplierDto);
         assertFalse(supplierDto.getIsLocal());
-        assertEquals("Park Avenue 12-3", supplierDto.getDirection());
+        assertEquals("test-create-supplier", supplierDto.getDirection());
     }
 
     @Test
