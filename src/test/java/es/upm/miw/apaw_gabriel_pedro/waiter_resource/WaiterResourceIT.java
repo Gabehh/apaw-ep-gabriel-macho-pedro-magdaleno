@@ -9,6 +9,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Calendar;
 import java.util.Date;
 
 @ApiTestConfig
@@ -45,4 +46,39 @@ public class WaiterResourceIT {
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
     }
+
+    @Test
+    void deleteWaiter(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, 1995);
+        cal.set(Calendar.MONTH, Calendar.FEBRUARY);
+        cal.set(Calendar.DAY_OF_MONTH, 2);
+        Date starDate = cal.getTime();
+        cal.set(Calendar.YEAR, 2019);
+        cal.set(Calendar.MONTH, Calendar.JANUARY);
+        cal.set(Calendar.DAY_OF_MONTH, 4);
+        Date birthDate = cal.getTime();
+
+        String idWaiter = this.webTestClient
+                .post().uri(WaiterResource.WAITERS)
+                .body(BodyInserters.fromObject(new WaiterDto("Luis", starDate, birthDate)))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(WaiterDto.class).returnResult().getResponseBody().getId();
+        this.webTestClient
+                .delete().uri(WaiterResource.WAITERS + WaiterResource.ID_ID, idWaiter)
+                .exchange()
+                .expectStatus().isOk();
+    }
+
+    @Test
+    void deleteSupplierException(){
+        this.webTestClient
+                .delete().uri(WaiterResource.WAITERS + WaiterResource.ID_ID, "")
+                .exchange()
+                .expectStatus()
+                .isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+
 }
