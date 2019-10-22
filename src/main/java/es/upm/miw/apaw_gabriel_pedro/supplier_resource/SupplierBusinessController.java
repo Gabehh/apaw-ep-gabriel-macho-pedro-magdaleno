@@ -1,4 +1,5 @@
 package es.upm.miw.apaw_gabriel_pedro.supplier_resource;
+import com.google.common.base.Strings;
 import es.upm.miw.apaw_gabriel_pedro.exceptions.NotFoundException;
 import es.upm.miw.apaw_gabriel_pedro.supplier_data.Supplier;
 import es.upm.miw.apaw_gabriel_pedro.supplier_data.SupplierDao;
@@ -24,4 +25,17 @@ public class SupplierBusinessController {
                 .orElseThrow(()-> new NotFoundException("Supplier id: "+ id));
         this.supplierDao.delete(supplier);
     }
+
+    public Supplier findProductById(String id){
+        return this.supplierDao.findById(id).orElseThrow(()-> new NotFoundException("Supplier id: "+ id));
+    }
+
+    public void update(String id, SupplierDto supplierDto){
+        Supplier supplier = this.findProductById(id);
+        supplier.setLocal(supplierDto.getIsLocal());
+        supplier.setDirection(supplierDto.getDirection());
+        supplier.setTelephone(supplierDto.getTelephone());
+        this.supplierDao.save(supplier);
+    }
+
 }

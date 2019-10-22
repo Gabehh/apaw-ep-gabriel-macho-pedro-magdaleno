@@ -30,4 +30,10 @@ public class SupplierResource {
         this.supplierBusinessController.delete(id);
     }
 
+    @PutMapping(value = ID_ID)
+    public void update (@PathVariable String id, @RequestBody SupplierDto supplierDto) {
+        supplierDto.validate();
+        this.supplierBusinessController.update(id, supplierDto);
+    }
+
 }
