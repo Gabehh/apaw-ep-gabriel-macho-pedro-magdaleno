@@ -33,6 +33,18 @@ public class Supplier {
         return telephone;
     }
 
+    public void setLocal(Boolean local) {
+        isLocal = local;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
     @Override
     public String toString(){
         return "Supplier(" +
