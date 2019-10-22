@@ -1,10 +1,9 @@
 package es.upm.miw.apaw_gabriel_pedro.bill_resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(BillResource.BILLS)
@@ -23,6 +22,11 @@ public class BillResource {
     public BillBasicDto create (@RequestBody BillCreationDto billCreationDto) {
         billCreationDto.validate();
         return this.billBusinessController.create(billCreationDto);
+    }
+
+    @GetMapping
+    public List<BillGetDto> findBills() {
+        return this.billBusinessController.findBills();
     }
 
 }
