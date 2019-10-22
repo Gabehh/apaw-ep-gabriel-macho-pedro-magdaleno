@@ -40,4 +40,19 @@ public class BillResourceIT {
                 .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
+
+    @Test
+    void testSearchEmpty() {
+        List<BillGetDto> bills = this.webTestClient
+                .get().uri(uriBuilder -> uriBuilder.path(BillResource.BILLS).build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(BillGetDto.class)
+                .returnResult().getResponseBody();
+        assertTrue(bills.size() == 0);
+    }
+
+    private void assertTrue(boolean b) {
+    }
+
 }
