@@ -28,6 +28,12 @@ public class ProductCreationDto {
 
     public void setName(String name){this.name = name;}
 
+    public String getSupplierId(){
+        return supplierId;
+    }
+
+    public void setSupplierId(String supplierId){ this.supplierId = supplierId;}
+
     public String getDescription(){return description;}
 
     public void setDescription(String description){this.description = description;}
@@ -35,12 +41,6 @@ public class ProductCreationDto {
     public Double getPrice(){return price;}
 
     public void setPrice(Double price){this.price = price;}
-
-    public String getSupplierId(){
-        return supplierId;
-    }
-
-    public void setSupplierId(String supplierId){ this.supplierId = supplierId;}
 
     public void validateCreate(){
         if(Strings.isNullOrEmpty(description) || Strings.isNullOrEmpty(name) || price == null || Strings.isNullOrEmpty(supplierId)){
