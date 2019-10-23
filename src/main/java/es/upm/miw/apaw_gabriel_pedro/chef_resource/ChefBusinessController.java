@@ -1,9 +1,11 @@
 package es.upm.miw.apaw_gabriel_pedro.chef_resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
+@Controller
 public class ChefBusinessController {
 
     private ChefDao chefDao;
