@@ -26,6 +26,10 @@ public class Chef {
 
     public String getName(){return name; }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Date getStarDate() {
         return starDate;
     }
