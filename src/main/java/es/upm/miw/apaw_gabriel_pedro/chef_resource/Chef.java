@@ -1,11 +1,11 @@
-package es.upm.miw.apaw_gabriel_pedro.waiter_resource;
+package es.upm.miw.apaw_gabriel_pedro.chef_resource;
 
-import es.upm.miw.apaw_gabriel_pedro.table_data.Table;
 import org.springframework.data.annotation.Id;
 
 import java.util.Date;
 
 public class Chef {
+
     @Id
     private String id;
 
@@ -25,6 +25,14 @@ public class Chef {
     public String getId(){return id;}
 
     public String getName(){return name; }
+
+    public Date getStarDate() {
+        return starDate;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
 
     @Override
     public String toString(){
