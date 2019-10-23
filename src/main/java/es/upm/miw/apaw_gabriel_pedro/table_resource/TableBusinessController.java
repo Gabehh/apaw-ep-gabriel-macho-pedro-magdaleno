@@ -9,12 +9,10 @@ import org.springframework.stereotype.Controller;
 public class TableBusinessController {
 
     private TableDao tableDao;
-    private BillDao billDao;
 
     @Autowired
     public TableBusinessController(TableDao tableDao, BillDao billDao) {
         this.tableDao = tableDao;
-        this.billDao = billDao;
     }
 
     public TableBasicDto create (TableCreationDto tableCreationDto) {

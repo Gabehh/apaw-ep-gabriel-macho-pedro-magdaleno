@@ -15,12 +15,10 @@ import java.util.stream.Collectors;
 public class BillBusinessController {
 
     private BillDao billDao;
-    private ProductDao productDao;
 
     @Autowired
     public BillBusinessController(BillDao billDao, ProductDao productDao) {
         this.billDao = billDao;
-        this.productDao = productDao;
     }
 
     public BillBasicDto create (BillCreationDto billCreationDto) {
