@@ -36,6 +36,10 @@ public class TableCreationDto {
         this.numberOfPeople = numberOfPeople;
     }
 
+    public Boolean getTerrace() { return isTerrace; }
+
+    public void setTerrace(Boolean terrace) { this.isTerrace = terrace; }
+
     public String getDescription() {
         return description;
     }
@@ -44,11 +48,6 @@ public class TableCreationDto {
         this.description = description;
     }
 
-    public Boolean getTerrace() {
-        return isTerrace;
-    }
-
-    public void setTerrace(Boolean terrace) { this.isTerrace = terrace; }
 
     public List<Bill> getBills() {
         return bills;
