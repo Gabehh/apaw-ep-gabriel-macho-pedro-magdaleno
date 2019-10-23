@@ -44,7 +44,7 @@ public class ProductResource {
     @PatchMapping()
     public void patch (@RequestBody List<ProductBasicDto> productBasicDtoList ){
         if(productBasicDtoList.stream().anyMatch(value-> Strings.isNullOrEmpty(value.getId()) || Strings.isNullOrEmpty(value.getName()))
-                                        || productBasicDtoList.size() == 0){
+                                        || productBasicDtoList.isEmpty()){
             throw new BadRequestException("The list is incorrect, missing parameters");
         }
         this.productBusinessController.patch(productBasicDtoList);

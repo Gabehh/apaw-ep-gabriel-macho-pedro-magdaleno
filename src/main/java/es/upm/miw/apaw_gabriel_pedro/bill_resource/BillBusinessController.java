@@ -2,8 +2,7 @@ package es.upm.miw.apaw_gabriel_pedro.bill_resource;
 
 import es.upm.miw.apaw_gabriel_pedro.bill_data.Bill;
 import es.upm.miw.apaw_gabriel_pedro.bill_data.BillDao;
-import es.upm.miw.apaw_gabriel_pedro.exceptions.NotFoundException;
-import es.upm.miw.apaw_gabriel_pedro.product_data.Product;
+
 import es.upm.miw.apaw_gabriel_pedro.product_data.ProductDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
