@@ -25,4 +25,10 @@ public class ChefResource {
         this.chefBusinessController.patch(oldName, newName);
     }
 
+    @PostMapping
+    public ChefDto create(@RequestBody ChefDto chefDto){
+        chefDto.validate();
+        return this.chefBusinessController.create(chefDto);
+    }
+
 }
