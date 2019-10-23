@@ -27,4 +27,10 @@ public class ChefBusinessController {
 
     }
 
+    public ChefDto create(ChefDto chefDto){
+        Chef chef = new Chef(chefDto.getName(), chefDto.getStarDate(), chefDto.getBirthDate());
+        this.chefDao.save(chef);
+        return new ChefDto(chef);
+    }
+
 }
