@@ -1,5 +1,4 @@
 package es.upm.miw.apaw_gabriel_pedro.supplier_resource;
-import com.google.common.base.Strings;
 import es.upm.miw.apaw_gabriel_pedro.exceptions.NotFoundException;
 import es.upm.miw.apaw_gabriel_pedro.supplier_data.Supplier;
 import es.upm.miw.apaw_gabriel_pedro.supplier_data.SupplierDao;

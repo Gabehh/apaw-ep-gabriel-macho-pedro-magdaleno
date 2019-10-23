@@ -31,8 +31,10 @@ public class Waiter {
     public Date getBirthDate(){return birthDate;}
 
     public String deliverFood(Table table){
-        return table.getTerrace() ? "Deliver food outside the restaurant"
-                                    : "Deliver food inside the restaurant";
+        if(table.getTerrace())
+            return "Deliver food outside the restaurant";
+        else
+            return "Deliver food inside the restaurant";
     }
 
     @Override

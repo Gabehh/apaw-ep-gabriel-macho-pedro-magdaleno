@@ -16,6 +16,7 @@ public class ProductBusinessController {
 
     private SupplierDao supplierDao;
     private ProductDao productDao;
+    private final String textProduct = "Product id: ";
 
     @Autowired
     public ProductBusinessController(SupplierDao supplierDao,ProductDao productDao){
@@ -25,7 +26,7 @@ public class ProductBusinessController {
 
     public ProductBasicDto create (ProductCreationDto productCreationDto){
         Supplier supplier = this.supplierDao.findById(productCreationDto.getSupplierId())
-                            .orElseThrow(()-> new NotFoundException("Product id: "+ productCreationDto.getSupplierId()));
+                            .orElseThrow(()-> new NotFoundException(textProduct + productCreationDto.getSupplierId()));
         Product product = new Product(productCreationDto.getName(),productCreationDto.getDescription(), productCreationDto.getPrice(), supplier);
         this.productDao.save(product);
         return new ProductBasicDto(product);
@@ -39,7 +40,7 @@ public class ProductBusinessController {
     }
 
     private Product findProductById(String id){
-        return this.productDao.findById(id).orElseThrow(()-> new NotFoundException("Product id: "+ id));
+        return this.productDao.findById(id).orElseThrow(()-> new NotFoundException(textProduct + id));
     }
 
     private Product findAndEditProduct(String id, String name){
@@ -55,7 +56,7 @@ public class ProductBusinessController {
         product.setPrice(productCreationDto.getPrice());
         if(!Strings.isNullOrEmpty(productCreationDto.getSupplierId())) {
             Supplier supplier = this.supplierDao.findById(productCreationDto.getSupplierId())
-                                .orElseThrow(() -> new NotFoundException("Product id: " + productCreationDto.getSupplierId()));
+                                .orElseThrow(() -> new NotFoundException(textProduct  + productCreationDto.getSupplierId()));
             product.setSupplier(supplier);
         }
         this.productDao.save(product);
