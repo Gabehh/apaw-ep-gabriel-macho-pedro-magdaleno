@@ -38,13 +38,15 @@ public class Product {
 
     public void setDescription(String description){this.description = description;}
 
+    public Supplier getSupplier(){return supplier;}
+
+    public void setSupplier(Supplier supplier){this.supplier = supplier;}
+
     public Double getPrice(){return price;}
 
     public void setPrice(Double price){this.price = price;}
 
-    public Supplier getSupplier(){return supplier;}
 
-    public void setSupplier(Supplier supplier){this.supplier = supplier;}
 
     @Override
     public String toString(){
