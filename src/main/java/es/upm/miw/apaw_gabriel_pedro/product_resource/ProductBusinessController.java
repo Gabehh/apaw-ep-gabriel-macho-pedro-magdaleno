@@ -16,7 +16,7 @@ public class ProductBusinessController {
 
     private SupplierDao supplierDao;
     private ProductDao productDao;
-    private final String textProduct = "Product id: ";
+    private final static String textProduct = "Product id: ";
 
     @Autowired
     public ProductBusinessController(SupplierDao supplierDao,ProductDao productDao){
