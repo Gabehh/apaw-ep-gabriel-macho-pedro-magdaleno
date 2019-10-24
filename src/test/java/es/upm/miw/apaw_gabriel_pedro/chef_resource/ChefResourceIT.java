@@ -72,4 +72,46 @@ public class ChefResourceIT {
                 .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
+    @Test
+    void testComposite() {
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, 1995);
+        cal.set(Calendar.MONTH, Calendar.FEBRUARY);
+        cal.set(Calendar.DAY_OF_MONTH, 2);
+        Date starDate = cal.getTime();
+        cal.set(Calendar.YEAR, 2019);
+        cal.set(Calendar.MONTH, Calendar.JANUARY);
+        cal.set(Calendar.DAY_OF_MONTH, 4);
+        Date birthDate = cal.getTime();
+
+        Chef chefA = new Chef("hoja A", starDate, birthDate);
+        Chef chefB = new Chef("hoja B", starDate, birthDate);
+        Chef chefXA = new Chef("hoja XA", starDate, birthDate);
+        Chef chefXB = new Chef("hoja XB", starDate, birthDate);
+        Chef chefC = new Chef("hoja C", starDate, birthDate);
+        Chef chefD = new Chef("hoja D", starDate, birthDate);
+
+        TreeChefsComposite comp1 = new TreeChefsComposite("composite1", "composite1", starDate, birthDate);
+        comp1.add(new TreeChefsLeaf(chefA));
+        comp1.add(new TreeChefsLeaf(chefB));
+        TreeChefsComposite comp2 = new TreeChefsComposite("composite2", "composite2", starDate, birthDate);
+        comp2.add(new TreeChefsLeaf(chefXA));
+        comp2.add(new TreeChefsLeaf(chefXB));
+        comp1.add(comp2);
+        comp1.add(new TreeChefsLeaf(chefC));
+        TreeChefsLeaf l = new TreeChefsLeaf(chefD);
+        comp1.add(l);
+        comp1.remove(l);
+
+        assertEquals("composite1", comp1.id());
+        assertEquals("composite1", comp1.name());
+        assertEquals(starDate, comp1.starDate());
+        assertEquals(birthDate, comp1.birthDate());
+        assertEquals("hoja D", l.name());
+        assertEquals(starDate, l.starDate());
+        assertEquals(birthDate, l.birthDate());
+
+    }
+
 }
