@@ -16,13 +16,6 @@ public class ProductBasicDto {
 
     }
 
-    public  ProductBasicDto(Product product){
-        this.id = product.getId();
-        this.name = product.getName();
-        this.description = product.getDescription();
-        this.price = product.getPrice();
-    }
-
     public String getId() { return id; }
 
     public void setId(String id) { this.id = id; }
@@ -39,6 +32,9 @@ public class ProductBasicDto {
 
     public void setDescription(String description){this.description = description;}
 
+    public static ProductBasicBuilder builder() {
+        return new ProductBasicBuilder();
+    }
 
     @Override
     public String toString(){
@@ -48,6 +44,46 @@ public class ProductBasicDto {
                 ", description='"+description + '\''+
                 ", price='"+price + '\''+
                 "}";
+    }
+
+    public static class ProductBasicBuilder{
+
+        private ProductBasicDto productBasicDto;
+
+        public ProductBasicBuilder(){this.productBasicDto = new ProductBasicDto();}
+
+        public ProductBasicBuilder id(String id){
+            this.productBasicDto.id = id;
+            return this;
+        }
+
+        public ProductBasicBuilder name(String name){
+            this.productBasicDto.name = name;
+            return this;
+        }
+
+        public ProductBasicBuilder description(String description){
+            this.productBasicDto.description = description;
+            return this;
+        }
+
+        public ProductBasicBuilder product(Product product){
+            this.productBasicDto.id = product.getId();
+            this.productBasicDto.name = product.getName();
+            this.productBasicDto.description = product.getDescription();
+            this.productBasicDto.price = product.getPrice();
+            return this;
+        }
+
+        public ProductBasicBuilder price(double price){
+            this.productBasicDto.price = price;
+            return this;
+        }
+
+        public ProductBasicDto build(){
+            return this.productBasicDto;
+        }
+
     }
 
 }

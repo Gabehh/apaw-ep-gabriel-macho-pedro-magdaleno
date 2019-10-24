@@ -33,7 +33,8 @@ public class ProductResourceIT {
         String supplierId = this.createSupplier("test-supplier");
         return this.webTestClient
                 .post().uri(ProductResource.PRODUCTS)
-                .body(BodyInserters.fromObject(new ProductCreationDto(value, value,4.0,supplierId)))
+                .body(BodyInserters.fromObject(ProductCreationDto.builder().name(value).description(value)
+                                    .price(4.0).supplierId(supplierId).build()))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(ProductBasicDto.class).returnResult().getResponseBody();
@@ -51,7 +52,8 @@ public class ProductResourceIT {
         String supplierId = this.createSupplier("test-supplier");
         this.webTestClient
                 .post().uri(ProductResource.PRODUCTS)
-                .body(BodyInserters.fromObject(new ProductCreationDto("", "",null,supplierId)))
+                .body(BodyInserters.fromObject(ProductCreationDto.builder().name("").description("")
+                        .price(1.0).supplierId(supplierId).build()))
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
     }
@@ -69,13 +71,15 @@ public class ProductResourceIT {
         String supplierId = this.createSupplier("Burger King 2-1");
         this.webTestClient
                 .post().uri(ProductResource.PRODUCTS)
-                .body(BodyInserters.fromObject(new ProductCreationDto("Big Hamburger", "It has cheese",5.0,supplierId)))
+                .body(BodyInserters.fromObject(ProductCreationDto.builder().name("Big Hamburger").description("It has cheese")
+                        .price(5.0).supplierId(supplierId).build()))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(ProductBasicDto.class).returnResult().getResponseBody();
         this.webTestClient
                 .post().uri(ProductResource.PRODUCTS)
-                .body(BodyInserters.fromObject(new ProductCreationDto("Small Burger", "It hasn't got cheese",2.0,supplierId)))
+                .body(BodyInserters.fromObject(ProductCreationDto.builder().name("Small Hamburger").description("It hasn't got cheese")
+                        .price(2.0).supplierId(supplierId).build()))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(ProductBasicDto.class).returnResult().getResponseBody();
@@ -97,13 +101,15 @@ public class ProductResourceIT {
         String secondSupplierId = this.createSupplier("McDonald's");
         this.webTestClient
                 .post().uri(ProductResource.PRODUCTS)
-                .body(BodyInserters.fromObject(new ProductCreationDto("Big Hamburger", "It has cheese",5.0,firstSupplierId)))
+                .body(BodyInserters.fromObject(ProductCreationDto.builder().name("Big Hamburger").description("It has cheese")
+                        .price(5.0).supplierId(firstSupplierId).build()))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(ProductBasicDto.class).returnResult().getResponseBody();
         this.webTestClient
                 .post().uri(ProductResource.PRODUCTS)
-                .body(BodyInserters.fromObject(new ProductCreationDto("Small Burger", "It hasn't got cheese",2.0,secondSupplierId)))
+                .body(BodyInserters.fromObject(ProductCreationDto.builder().name("Small Hamburger").description("It hasn't got cheese")
+                        .price(2.0).supplierId(secondSupplierId).build()))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(ProductBasicDto.class).returnResult().getResponseBody();
