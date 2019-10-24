@@ -27,26 +27,21 @@ public class ProductBusinessController {
     public ProductBasicDto create (ProductCreationDto productCreationDto){
         Supplier supplier = this.supplierDao.findById(productCreationDto.getSupplierId())
                             .orElseThrow(()-> new NotFoundException(textProduct + productCreationDto.getSupplierId()));
-        Product product = new Product(productCreationDto.getName(),productCreationDto.getDescription(), productCreationDto.getPrice(), supplier);
+        Product product = Product.builder().name(productCreationDto.getName()).description(productCreationDto.getDescription())
+                        .price(productCreationDto.getPrice()).supplier(supplier).build();
         this.productDao.save(product);
-        return new ProductBasicDto(product);
+        return ProductBasicDto.builder().product(product).build();
     }
 
     public List<ProductBasicDto> findBySupplierDirection(String value){
         return this.productDao.findAll().stream()
                 .filter(product -> product.getSupplier().getDirection().equalsIgnoreCase(value))
-                .map(ProductBasicDto::new)
+                .map(productValues->ProductBasicDto.builder().product(productValues).build())
                 .collect(Collectors.toList());
     }
 
     public Product findProductById(String id){
         return this.productDao.findById(id).orElseThrow(()-> new NotFoundException(textProduct + id));
-    }
-
-    private Product findAndEditProduct(String id, String name){
-        Product product = findProductById(id);
-        product.setName(name);
-        return product;
     }
 
     public void update(String id, ProductCreationDto productCreationDto){
@@ -64,7 +59,8 @@ public class ProductBusinessController {
 
     public void patch(List<ProductBasicDto> products){
         List<Product> productList = products.stream()
-                .map(value -> findAndEditProduct(value.getId(),value.getName())).collect(Collectors.toList());
+                .map(value->Product.builder().product(findProductById(value.getId())).name(value.getName())
+                .build()).collect(Collectors.toList());
         this.productDao.saveAll(productList);
     }
 }

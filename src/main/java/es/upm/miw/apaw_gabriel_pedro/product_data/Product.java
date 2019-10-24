@@ -18,14 +18,6 @@ public class Product {
     @DBRef
     private Supplier supplier;
 
-    public Product(String name, String description, Double price, Supplier supplier){
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.supplier = supplier;
-
-    }
-
     public String getId(){
         return id;
     }
@@ -46,7 +38,9 @@ public class Product {
 
     public void setPrice(Double price){this.price = price;}
 
-
+    public static ProductBuilder builder() {
+        return new ProductBuilder();
+    }
 
     @Override
     public String toString(){
@@ -56,6 +50,51 @@ public class Product {
                 ", description='"+description + '\''+
                 ", price='"+price + '\''+
                 "}";
+    }
+
+    public static class ProductBuilder{
+
+        private Product product;
+
+        public ProductBuilder(){this.product = new Product();}
+
+        public ProductBuilder id(String id){
+            this.product.id = id;
+            return this;
+        }
+
+        public ProductBuilder name(String name){
+            this.product.name = name;
+            return this;
+        }
+
+        public ProductBuilder description(String description){
+            this.product.description = description;
+            return this;
+        }
+
+        public ProductBuilder price(double price){
+            this.product.price = price;
+            return this;
+        }
+
+        public ProductBuilder supplier(Supplier supplier){
+            this.product.supplier = supplier;
+            return this;
+        }
+
+        public ProductBuilder product(Product product){
+            this.product.id = product.getId();
+            this.product.name = product.getName();
+            this.product.description = product.getDescription();
+            this.product.price = product.getPrice();
+            this.product.supplier = product.getSupplier();
+            return this;
+        }
+
+        public Product build(){
+            return this.product;
+        }
     }
 
 }
