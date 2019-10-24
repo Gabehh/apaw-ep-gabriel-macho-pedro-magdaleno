@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
+import reactor.test.StepVerifier;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -22,6 +23,27 @@ public class ChefResourceIT {
     @Autowired
     private ChefSeeder chefSeeder;
 
+    void testPublisher() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, 1995);
+        cal.set(Calendar.MONTH, Calendar.FEBRUARY);
+        cal.set(Calendar.DAY_OF_MONTH, 2);
+        Date starDate = cal.getTime();
+        cal.set(Calendar.YEAR, 2019);
+        cal.set(Calendar.MONTH, Calendar.JANUARY);
+        cal.set(Calendar.DAY_OF_MONTH, 4);
+        Date birthDate = cal.getTime();
+
+        ChefPublish chefPublish = new ChefPublish();
+
+        StepVerifier
+                .create(chefPublish.publisher())
+                .then(() -> chefPublish.create("test-create-chef", starDate, birthDate))
+                .expectNext("name: test-create-chef" + " " + "starDate: "+ starDate + " " + "birthDate: "+ birthDate)
+                .thenCancel()
+                .verify();
+    }
+
     @Test
     void testPatch(){
         this.webTestClient
@@ -35,6 +57,9 @@ public class ChefResourceIT {
 
     @Test
     void testCreate() {
+
+        testPublisher();
+
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, 1995);
         cal.set(Calendar.MONTH, Calendar.FEBRUARY);
@@ -47,12 +72,12 @@ public class ChefResourceIT {
 
         ChefDto chefDto = this.webTestClient
                 .post().uri(ChefResource.CHEFS)
-                .body(BodyInserters.fromObject(new ChefDto("Jaime", starDate, birthDate)))
+                .body(BodyInserters.fromObject(new ChefDto("test-create-chef", starDate, birthDate)))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(ChefDto.class).returnResult().getResponseBody();
         assertNotNull(chefDto);
-        assertEquals("Jaime", chefDto.getName());
+        assertEquals("test-create-chef", chefDto.getName());
     }
 
     @Test
