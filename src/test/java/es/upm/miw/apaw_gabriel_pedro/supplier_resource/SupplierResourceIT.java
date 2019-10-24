@@ -1,14 +1,13 @@
 package es.upm.miw.apaw_gabriel_pedro.supplier_resource;
 
+import com.google.common.base.Strings;
 import es.upm.miw.apaw_gabriel_pedro.ApiTestConfig;
-import es.upm.miw.apaw_gabriel_pedro.supplier_data.Supplier;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
-
-import java.util.List;
+import reactor.test.StepVerifier;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,6 +28,7 @@ public class SupplierResourceIT {
 
     @Test
     void testCreate() {
+        testPublisher("test-create-supplier");
         SupplierDto supplierDto = this.createSupplier("test-create-supplier");
 
         assertNotNull(supplierDto);
@@ -108,6 +108,16 @@ public class SupplierResourceIT {
                 .put().uri(SupplierResource.SUPPLIERS+SupplierResource.ID_ID, "id")
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    void testPublisher(String valueTest) {
+        SupplierPublish supplierPublish = new SupplierPublish();
+        StepVerifier
+                .create(supplierPublish.publisher())
+                .then(() -> supplierPublish.create(true,valueTest,valueTest))
+                .expectNext("direction: "+ valueTest + " " + "Telephone: "+valueTest)
+                .thenCancel()
+                .verify();
     }
 
 }

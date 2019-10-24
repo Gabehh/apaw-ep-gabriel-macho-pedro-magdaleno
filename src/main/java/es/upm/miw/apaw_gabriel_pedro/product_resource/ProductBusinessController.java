@@ -16,7 +16,7 @@ public class ProductBusinessController {
 
     private SupplierDao supplierDao;
     private ProductDao productDao;
-    private static final String textProduct = "Product id: ";
+    private static final String TEXT = "Product id: ";
 
     @Autowired
     public ProductBusinessController(SupplierDao supplierDao,ProductDao productDao){
@@ -26,7 +26,7 @@ public class ProductBusinessController {
 
     public ProductBasicDto create (ProductCreationDto productCreationDto){
         Supplier supplier = this.supplierDao.findById(productCreationDto.getSupplierId())
-                            .orElseThrow(()-> new NotFoundException(textProduct + productCreationDto.getSupplierId()));
+                            .orElseThrow(()-> new NotFoundException(TEXT + productCreationDto.getSupplierId()));
         Product product = Product.builder().name(productCreationDto.getName()).description(productCreationDto.getDescription())
                         .price(productCreationDto.getPrice()).supplier(supplier).build();
         this.productDao.save(product);
@@ -41,7 +41,7 @@ public class ProductBusinessController {
     }
 
     public Product findProductById(String id){
-        return this.productDao.findById(id).orElseThrow(()-> new NotFoundException(textProduct + id));
+        return this.productDao.findById(id).orElseThrow(()-> new NotFoundException(TEXT + id));
     }
 
     public void update(String id, ProductCreationDto productCreationDto){
@@ -51,7 +51,7 @@ public class ProductBusinessController {
         product.setPrice(productCreationDto.getPrice());
         if(!Strings.isNullOrEmpty(productCreationDto.getSupplierId())) {
             Supplier supplier = this.supplierDao.findById(productCreationDto.getSupplierId())
-                                .orElseThrow(() -> new NotFoundException(textProduct  + productCreationDto.getSupplierId()));
+                                .orElseThrow(() -> new NotFoundException(TEXT  + productCreationDto.getSupplierId()));
             product.setSupplier(supplier);
         }
         this.productDao.save(product);
