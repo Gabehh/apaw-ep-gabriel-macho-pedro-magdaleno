@@ -5,11 +5,11 @@ import reactor.core.publisher.Flux;
 
 public class SupplierPublish {
 
-    private Boolean isLocal;
+    public Boolean isLocal;
 
-    private String telephone;
+    public String telephone;
 
-    private String direction;
+    public String direction;
 
     public EmitterProcessor<String> emitter;
 
@@ -17,11 +17,19 @@ public class SupplierPublish {
         this.emitter = EmitterProcessor.create();
     }
 
-    public void create(Boolean isLocal, String direction, String telephone){
-        this.telephone = telephone;
+    public void setIsLocal(Boolean isLocal){
+        this.isLocal = isLocal;
+        this.emitter.onNext("is Local?: " + isLocal );
+    }
+
+    public void setDirection(String direction){
         this.direction = direction;
-        this.isLocal= isLocal;
-        this.emitter.onNext("direction: " + direction + " " + "Telephone: "+ telephone);
+        this.emitter.onNext("Direction: " + direction);
+    }
+
+    public void setTelephone(String telephone){
+        this.telephone = telephone;
+        this.emitter.onNext("Telephone: "+ telephone);
     }
 
     public Flux<String> publisher() {
