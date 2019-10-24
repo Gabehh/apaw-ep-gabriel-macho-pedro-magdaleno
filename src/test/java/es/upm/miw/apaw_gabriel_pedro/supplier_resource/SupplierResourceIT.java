@@ -28,7 +28,7 @@ public class SupplierResourceIT {
 
     @Test
     void testCreate() {
-        testPublisher("test-create-supplier");
+        testPublisherCreate("test-create-supplier");
         SupplierDto supplierDto = this.createSupplier("test-create-supplier");
 
         assertNotNull(supplierDto);
@@ -110,12 +110,32 @@ public class SupplierResourceIT {
                 .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
-    void testPublisher(String valueTest) {
+    @Test
+    void testPublisher() {
         SupplierPublish supplierPublish = new SupplierPublish();
         StepVerifier
                 .create(supplierPublish.publisher())
-                .then(() -> supplierPublish.create(true,valueTest,valueTest))
-                .expectNext("direction: "+ valueTest + " " + "Telephone: "+valueTest)
+                .then(() -> supplierPublish.setIsLocal(true))
+                .expectNext("is Local?: "+true)
+                .then(() -> supplierPublish.setDirection("Madrid 2-1"))
+                .expectNext("Direction: Madrid 2-1")
+                .then(() -> supplierPublish.setTelephone("3465417854"))
+                .expectNext("Telephone: 3465417854")
+                .thenCancel()
+                .verify();
+    }
+
+
+    void testPublisherCreate(String value) {
+        SupplierPublish supplierPublish = new SupplierPublish();
+        StepVerifier
+                .create(supplierPublish.publisher())
+                .then(() -> supplierPublish.setIsLocal(true))
+                .expectNext("is Local?: "+true)
+                .then(() -> supplierPublish.setDirection(value))
+                .expectNext("Direction: "+value)
+                .then(() -> supplierPublish.setTelephone(value))
+                .expectNext("Telephone: "+value)
                 .thenCancel()
                 .verify();
     }
