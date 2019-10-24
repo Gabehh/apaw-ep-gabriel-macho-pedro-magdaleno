@@ -18,6 +18,13 @@ public class ProductCreationDto {
 
     }
 
+    public  ProductCreationDto(String name, String description, Double price, String supplierId){
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.supplierId = supplierId;
+    }
+
     public String getName(){return name;}
 
     public void setName(String name){this.name = name;}
